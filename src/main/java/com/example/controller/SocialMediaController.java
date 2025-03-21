@@ -53,12 +53,10 @@ public class SocialMediaController {
         return ResponseEntity.status(400).build();
     }
 
-    // Validate postedBy (ensure the account exists)
     if (accountService.getAccount(message.getPostedBy()) == null) {
         return ResponseEntity.status(400).build();
     }
 
-    // Now it's safe to persist
     Message newMessage = messageService.persistMessage(message);
     return ResponseEntity.ok(newMessage);
 
@@ -81,7 +79,7 @@ public class SocialMediaController {
 
     @PatchMapping("/messages/{message_id}")
     public ResponseEntity<?> updateMessage(@PathVariable Integer message_id, @RequestBody Map<String, String> body){
-        String newText = body.get("messageText"); // Extract message text
+        String newText = body.get("messageText"); 
 
     if (newText == null || newText.isBlank() || newText.length() > 255) {
         return ResponseEntity.status(400).build();
